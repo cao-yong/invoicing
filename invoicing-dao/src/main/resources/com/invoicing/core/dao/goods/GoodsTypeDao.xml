@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.invoicing.core.dao.goods.GoodsTypeDao" >
+  <resultMap id="BaseResultMap" type="com.invoicing.core.bean.goods.GoodsType" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="good_type_no" property="goodTypeNo" jdbcType="VARCHAR" />
+    <result column="type_name" property="typeName" jdbcType="VARCHAR" />
+    <result column="parend_id" property="parendId" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="checkbox" property="checkbox" jdbcType="INTEGER" />
+    <result column="node_icon" property="nodeIcon" jdbcType="VARCHAR" />
+    <result column="node_type" property="nodeType" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+    <result column="extra_info" property="extraInfo" jdbcType="VARCHAR" />
+    <result column="is_deleted" property="isDeleted" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    <if test="fields == null" >
+      id, good_type_no, type_name, parend_id, url, checkbox, node_icon, node_type, create_time, 
+      update_time, creator, modifier, extra_info, is_deleted
+    </if>
+    <if test="fields != null" >
+      ${fields}
+    </if>
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.invoicing.core.bean.goods.GoodsTypeQuery" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from goods_type
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="startRow != null" >
+      limit #{startRow} , #{pageSize}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    id,good_type_no,type_name,parend_id,url,checkbox,node_icon,node_type,create_time,update_time,creator,modifier,extra_info,is_deleted
+    from goods_type
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from goods_type
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.invoicing.core.bean.goods.GoodsTypeQuery" >
+    delete from goods_type
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.invoicing.core.bean.goods.GoodsType" >
+    insert into goods_type (id, good_type_no, type_name, 
+      parend_id, url, checkbox, 
+      node_icon, node_type, create_time, 
+      update_time, creator, modifier, 
+      extra_info, is_deleted)
+    values (#{id,jdbcType=INTEGER}, #{goodTypeNo,jdbcType=VARCHAR}, #{typeName,jdbcType=VARCHAR}, 
+      #{parendId,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{checkbox,jdbcType=INTEGER}, 
+      #{nodeIcon,jdbcType=VARCHAR}, #{nodeType,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{creator,jdbcType=VARCHAR}, #{modifier,jdbcType=VARCHAR}, 
+      #{extraInfo,jdbcType=VARCHAR}, #{isDeleted,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.invoicing.core.bean.goods.GoodsType" >
+    insert into goods_type
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="goodTypeNo != null" >
+        good_type_no,
+      </if>
+      <if test="typeName != null" >
+        type_name,
+      </if>
+      <if test="parendId != null" >
+        parend_id,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+      <if test="checkbox != null" >
+        checkbox,
+      </if>
+      <if test="nodeIcon != null" >
+        node_icon,
+      </if>
+      <if test="nodeType != null" >
+        node_type,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="modifier != null" >
+        modifier,
+      </if>
+      <if test="extraInfo != null" >
+        extra_info,
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="goodTypeNo != null" >
+        #{goodTypeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="typeName != null" >
+        #{typeName,jdbcType=VARCHAR},
+      </if>
+      <if test="parendId != null" >
+        #{parendId,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="checkbox != null" >
+        #{checkbox,jdbcType=INTEGER},
+      </if>
+      <if test="nodeIcon != null" >
+        #{nodeIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="nodeType != null" >
+        #{nodeType,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="modifier != null" >
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="extraInfo != null" >
+        #{extraInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="isDeleted != null" >
+        #{isDeleted,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.invoicing.core.bean.goods.GoodsTypeQuery" resultType="java.lang.Integer" >
+    select count(*) from goods_type
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update goods_type
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.goodTypeNo != null" >
+        good_type_no = #{record.goodTypeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.typeName != null" >
+        type_name = #{record.typeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parendId != null" >
+        parend_id = #{record.parendId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.url != null" >
+        url = #{record.url,jdbcType=VARCHAR},
+      </if>
+      <if test="record.checkbox != null" >
+        checkbox = #{record.checkbox,jdbcType=INTEGER},
+      </if>
+      <if test="record.nodeIcon != null" >
+        node_icon = #{record.nodeIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nodeType != null" >
+        node_type = #{record.nodeType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.creator != null" >
+        creator = #{record.creator,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifier != null" >
+        modifier = #{record.modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="record.extraInfo != null" >
+        extra_info = #{record.extraInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isDeleted != null" >
+        is_deleted = #{record.isDeleted,jdbcType=CHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update goods_type
+    set id = #{record.id,jdbcType=INTEGER},
+      good_type_no = #{record.goodTypeNo,jdbcType=VARCHAR},
+      type_name = #{record.typeName,jdbcType=VARCHAR},
+      parend_id = #{record.parendId,jdbcType=VARCHAR},
+      url = #{record.url,jdbcType=VARCHAR},
+      checkbox = #{record.checkbox,jdbcType=INTEGER},
+      node_icon = #{record.nodeIcon,jdbcType=VARCHAR},
+      node_type = #{record.nodeType,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      creator = #{record.creator,jdbcType=VARCHAR},
+      modifier = #{record.modifier,jdbcType=VARCHAR},
+      extra_info = #{record.extraInfo,jdbcType=VARCHAR},
+      is_deleted = #{record.isDeleted,jdbcType=CHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.invoicing.core.bean.goods.GoodsType" >
+    update goods_type
+    <set >
+      <if test="goodTypeNo != null" >
+        good_type_no = #{goodTypeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="typeName != null" >
+        type_name = #{typeName,jdbcType=VARCHAR},
+      </if>
+      <if test="parendId != null" >
+        parend_id = #{parendId,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="checkbox != null" >
+        checkbox = #{checkbox,jdbcType=INTEGER},
+      </if>
+      <if test="nodeIcon != null" >
+        node_icon = #{nodeIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="nodeType != null" >
+        node_type = #{nodeType,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="modifier != null" >
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="extraInfo != null" >
+        extra_info = #{extraInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted = #{isDeleted,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.invoicing.core.bean.goods.GoodsType" >
+    update goods_type
+    set good_type_no = #{goodTypeNo,jdbcType=VARCHAR},
+      type_name = #{typeName,jdbcType=VARCHAR},
+      parend_id = #{parendId,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      checkbox = #{checkbox,jdbcType=INTEGER},
+      node_icon = #{nodeIcon,jdbcType=VARCHAR},
+      node_type = #{nodeType,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      creator = #{creator,jdbcType=VARCHAR},
+      modifier = #{modifier,jdbcType=VARCHAR},
+      extra_info = #{extraInfo,jdbcType=VARCHAR},
+      is_deleted = #{isDeleted,jdbcType=CHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

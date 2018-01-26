@@ -1,0 +1,441 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.invoicing.core.dao.staff.StaffDao" >
+  <resultMap id="BaseResultMap" type="com.invoicing.core.bean.staff.Staff" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="staff_code" property="staffCode" jdbcType="CHAR" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="TINYINT" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="position" property="position" jdbcType="VARCHAR" />
+    <result column="position_tail" property="positionTail" jdbcType="VARCHAR" />
+    <result column="account_status" property="accountStatus" jdbcType="TINYINT" />
+    <result column="staff_status" property="staffStatus" jdbcType="TINYINT" />
+    <result column="is_operator" property="isOperator" jdbcType="CHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+    <result column="extra_info" property="extraInfo" jdbcType="VARCHAR" />
+    <result column="is_deleted" property="isDeleted" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    <if test="fields == null" >
+      id, staff_code, user_name, password, name, sex, phone, position, position_tail, account_status, 
+      staff_status, is_operator, remark, create_time, update_time, creator, modifier, extra_info, 
+      is_deleted
+    </if>
+    <if test="fields != null" >
+      ${fields}
+    </if>
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.invoicing.core.bean.staff.StaffQuery" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from staff
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="startRow != null" >
+      limit #{startRow} , #{pageSize}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    id,staff_code,user_name,password,name,sex,phone,position,position_tail,account_status,staff_status,is_operator,remark,create_time,update_time,creator,modifier,extra_info,is_deleted
+    from staff
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from staff
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.invoicing.core.bean.staff.StaffQuery" >
+    delete from staff
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.invoicing.core.bean.staff.Staff" >
+    insert into staff (id, staff_code, user_name, 
+      password, name, sex, 
+      phone, position, position_tail, 
+      account_status, staff_status, is_operator, 
+      remark, create_time, update_time, 
+      creator, modifier, extra_info, 
+      is_deleted)
+    values (#{id,jdbcType=INTEGER}, #{staffCode,jdbcType=CHAR}, #{userName,jdbcType=VARCHAR}, 
+      #{password,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{sex,jdbcType=TINYINT}, 
+      #{phone,jdbcType=VARCHAR}, #{position,jdbcType=VARCHAR}, #{positionTail,jdbcType=VARCHAR}, 
+      #{accountStatus,jdbcType=TINYINT}, #{staffStatus,jdbcType=TINYINT}, #{isOperator,jdbcType=CHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{creator,jdbcType=VARCHAR}, #{modifier,jdbcType=VARCHAR}, #{extraInfo,jdbcType=VARCHAR}, 
+      #{isDeleted,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.invoicing.core.bean.staff.Staff" >
+    insert into staff
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="staffCode != null" >
+        staff_code,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="sex != null" >
+        sex,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="position != null" >
+        position,
+      </if>
+      <if test="positionTail != null" >
+        position_tail,
+      </if>
+      <if test="accountStatus != null" >
+        account_status,
+      </if>
+      <if test="staffStatus != null" >
+        staff_status,
+      </if>
+      <if test="isOperator != null" >
+        is_operator,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="modifier != null" >
+        modifier,
+      </if>
+      <if test="extraInfo != null" >
+        extra_info,
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="staffCode != null" >
+        #{staffCode,jdbcType=CHAR},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=TINYINT},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="position != null" >
+        #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="positionTail != null" >
+        #{positionTail,jdbcType=VARCHAR},
+      </if>
+      <if test="accountStatus != null" >
+        #{accountStatus,jdbcType=TINYINT},
+      </if>
+      <if test="staffStatus != null" >
+        #{staffStatus,jdbcType=TINYINT},
+      </if>
+      <if test="isOperator != null" >
+        #{isOperator,jdbcType=CHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="modifier != null" >
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="extraInfo != null" >
+        #{extraInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="isDeleted != null" >
+        #{isDeleted,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.invoicing.core.bean.staff.StaffQuery" resultType="java.lang.Integer" >
+    select count(*) from staff
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update staff
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.staffCode != null" >
+        staff_code = #{record.staffCode,jdbcType=CHAR},
+      </if>
+      <if test="record.userName != null" >
+        user_name = #{record.userName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.password != null" >
+        password = #{record.password,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sex != null" >
+        sex = #{record.sex,jdbcType=TINYINT},
+      </if>
+      <if test="record.phone != null" >
+        phone = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.position != null" >
+        position = #{record.position,jdbcType=VARCHAR},
+      </if>
+      <if test="record.positionTail != null" >
+        position_tail = #{record.positionTail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.accountStatus != null" >
+        account_status = #{record.accountStatus,jdbcType=TINYINT},
+      </if>
+      <if test="record.staffStatus != null" >
+        staff_status = #{record.staffStatus,jdbcType=TINYINT},
+      </if>
+      <if test="record.isOperator != null" >
+        is_operator = #{record.isOperator,jdbcType=CHAR},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.creator != null" >
+        creator = #{record.creator,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifier != null" >
+        modifier = #{record.modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="record.extraInfo != null" >
+        extra_info = #{record.extraInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isDeleted != null" >
+        is_deleted = #{record.isDeleted,jdbcType=CHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update staff
+    set id = #{record.id,jdbcType=INTEGER},
+      staff_code = #{record.staffCode,jdbcType=CHAR},
+      user_name = #{record.userName,jdbcType=VARCHAR},
+      password = #{record.password,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      sex = #{record.sex,jdbcType=TINYINT},
+      phone = #{record.phone,jdbcType=VARCHAR},
+      position = #{record.position,jdbcType=VARCHAR},
+      position_tail = #{record.positionTail,jdbcType=VARCHAR},
+      account_status = #{record.accountStatus,jdbcType=TINYINT},
+      staff_status = #{record.staffStatus,jdbcType=TINYINT},
+      is_operator = #{record.isOperator,jdbcType=CHAR},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      creator = #{record.creator,jdbcType=VARCHAR},
+      modifier = #{record.modifier,jdbcType=VARCHAR},
+      extra_info = #{record.extraInfo,jdbcType=VARCHAR},
+      is_deleted = #{record.isDeleted,jdbcType=CHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.invoicing.core.bean.staff.Staff" >
+    update staff
+    <set >
+      <if test="staffCode != null" >
+        staff_code = #{staffCode,jdbcType=CHAR},
+      </if>
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=TINYINT},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="position != null" >
+        position = #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="positionTail != null" >
+        position_tail = #{positionTail,jdbcType=VARCHAR},
+      </if>
+      <if test="accountStatus != null" >
+        account_status = #{accountStatus,jdbcType=TINYINT},
+      </if>
+      <if test="staffStatus != null" >
+        staff_status = #{staffStatus,jdbcType=TINYINT},
+      </if>
+      <if test="isOperator != null" >
+        is_operator = #{isOperator,jdbcType=CHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="modifier != null" >
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="extraInfo != null" >
+        extra_info = #{extraInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted = #{isDeleted,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.invoicing.core.bean.staff.Staff" >
+    update staff
+    set staff_code = #{staffCode,jdbcType=CHAR},
+      user_name = #{userName,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=TINYINT},
+      phone = #{phone,jdbcType=VARCHAR},
+      position = #{position,jdbcType=VARCHAR},
+      position_tail = #{positionTail,jdbcType=VARCHAR},
+      account_status = #{accountStatus,jdbcType=TINYINT},
+      staff_status = #{staffStatus,jdbcType=TINYINT},
+      is_operator = #{isOperator,jdbcType=CHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      creator = #{creator,jdbcType=VARCHAR},
+      modifier = #{modifier,jdbcType=VARCHAR},
+      extra_info = #{extraInfo,jdbcType=VARCHAR},
+      is_deleted = #{isDeleted,jdbcType=CHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

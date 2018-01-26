@@ -1,0 +1,471 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.invoicing.core.dao.receipt.ReceiptDetailDao" >
+  <resultMap id="BaseResultMap" type="com.invoicing.core.bean.receipt.ReceiptDetail" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="receipt_no" property="receiptNo" jdbcType="VARCHAR" />
+    <result column="goods_id" property="goodsId" jdbcType="VARCHAR" />
+    <result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
+    <result column="goods_type" property="goodsType" jdbcType="VARCHAR" />
+    <result column="production_site" property="productionSite" jdbcType="VARCHAR" />
+    <result column="unit" property="unit" jdbcType="CHAR" />
+    <result column="number" property="number" jdbcType="INTEGER" />
+    <result column="price" property="price" jdbcType="VARCHAR" />
+    <result column="stock" property="stock" jdbcType="VARCHAR" />
+    <result column="delivered_number" property="deliveredNumber" jdbcType="INTEGER" />
+    <result column="undelivered_number" property="undeliveredNumber" jdbcType="INTEGER" />
+    <result column="received_number" property="receivedNumber" jdbcType="INTEGER" />
+    <result column="unreceived_number" property="unreceivedNumber" jdbcType="INTEGER" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+    <result column="extra_info" property="extraInfo" jdbcType="VARCHAR" />
+    <result column="is_deleted" property="isDeleted" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    <if test="fields == null" >
+      id, receipt_no, goods_id, goods_name, goods_type, production_site, unit, number, 
+      price, stock, delivered_number, undelivered_number, received_number, unreceived_number, 
+      remark, create_time, update_time, creator, modifier, extra_info, is_deleted
+    </if>
+    <if test="fields != null" >
+      ${fields}
+    </if>
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.invoicing.core.bean.receipt.ReceiptDetailQuery" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from receipt_detail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="startRow != null" >
+      limit #{startRow} , #{pageSize}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    id,receipt_no,goods_id,goods_name,goods_type,production_site,unit,number,price,stock,delivered_number,undelivered_number,received_number,unreceived_number,remark,create_time,update_time,creator,modifier,extra_info,is_deleted
+    from receipt_detail
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from receipt_detail
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.invoicing.core.bean.receipt.ReceiptDetailQuery" >
+    delete from receipt_detail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.invoicing.core.bean.receipt.ReceiptDetail" >
+    insert into receipt_detail (id, receipt_no, goods_id, 
+      goods_name, goods_type, production_site, 
+      unit, number, price, stock, 
+      delivered_number, undelivered_number, received_number, 
+      unreceived_number, remark, create_time, 
+      update_time, creator, modifier, 
+      extra_info, is_deleted)
+    values (#{id,jdbcType=INTEGER}, #{receiptNo,jdbcType=VARCHAR}, #{goodsId,jdbcType=VARCHAR}, 
+      #{goodsName,jdbcType=VARCHAR}, #{goodsType,jdbcType=VARCHAR}, #{productionSite,jdbcType=VARCHAR}, 
+      #{unit,jdbcType=CHAR}, #{number,jdbcType=INTEGER}, #{price,jdbcType=VARCHAR}, #{stock,jdbcType=VARCHAR}, 
+      #{deliveredNumber,jdbcType=INTEGER}, #{undeliveredNumber,jdbcType=INTEGER}, #{receivedNumber,jdbcType=INTEGER}, 
+      #{unreceivedNumber,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{creator,jdbcType=VARCHAR}, #{modifier,jdbcType=VARCHAR}, 
+      #{extraInfo,jdbcType=VARCHAR}, #{isDeleted,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.invoicing.core.bean.receipt.ReceiptDetail" >
+    insert into receipt_detail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="receiptNo != null" >
+        receipt_no,
+      </if>
+      <if test="goodsId != null" >
+        goods_id,
+      </if>
+      <if test="goodsName != null" >
+        goods_name,
+      </if>
+      <if test="goodsType != null" >
+        goods_type,
+      </if>
+      <if test="productionSite != null" >
+        production_site,
+      </if>
+      <if test="unit != null" >
+        unit,
+      </if>
+      <if test="number != null" >
+        number,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="stock != null" >
+        stock,
+      </if>
+      <if test="deliveredNumber != null" >
+        delivered_number,
+      </if>
+      <if test="undeliveredNumber != null" >
+        undelivered_number,
+      </if>
+      <if test="receivedNumber != null" >
+        received_number,
+      </if>
+      <if test="unreceivedNumber != null" >
+        unreceived_number,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="modifier != null" >
+        modifier,
+      </if>
+      <if test="extraInfo != null" >
+        extra_info,
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="receiptNo != null" >
+        #{receiptNo,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsId != null" >
+        #{goodsId,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsName != null" >
+        #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsType != null" >
+        #{goodsType,jdbcType=VARCHAR},
+      </if>
+      <if test="productionSite != null" >
+        #{productionSite,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null" >
+        #{unit,jdbcType=CHAR},
+      </if>
+      <if test="number != null" >
+        #{number,jdbcType=INTEGER},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=VARCHAR},
+      </if>
+      <if test="stock != null" >
+        #{stock,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveredNumber != null" >
+        #{deliveredNumber,jdbcType=INTEGER},
+      </if>
+      <if test="undeliveredNumber != null" >
+        #{undeliveredNumber,jdbcType=INTEGER},
+      </if>
+      <if test="receivedNumber != null" >
+        #{receivedNumber,jdbcType=INTEGER},
+      </if>
+      <if test="unreceivedNumber != null" >
+        #{unreceivedNumber,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="modifier != null" >
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="extraInfo != null" >
+        #{extraInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="isDeleted != null" >
+        #{isDeleted,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.invoicing.core.bean.receipt.ReceiptDetailQuery" resultType="java.lang.Integer" >
+    select count(*) from receipt_detail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update receipt_detail
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.receiptNo != null" >
+        receipt_no = #{record.receiptNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsId != null" >
+        goods_id = #{record.goodsId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsName != null" >
+        goods_name = #{record.goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsType != null" >
+        goods_type = #{record.goodsType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productionSite != null" >
+        production_site = #{record.productionSite,jdbcType=VARCHAR},
+      </if>
+      <if test="record.unit != null" >
+        unit = #{record.unit,jdbcType=CHAR},
+      </if>
+      <if test="record.number != null" >
+        number = #{record.number,jdbcType=INTEGER},
+      </if>
+      <if test="record.price != null" >
+        price = #{record.price,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stock != null" >
+        stock = #{record.stock,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deliveredNumber != null" >
+        delivered_number = #{record.deliveredNumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.undeliveredNumber != null" >
+        undelivered_number = #{record.undeliveredNumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.receivedNumber != null" >
+        received_number = #{record.receivedNumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.unreceivedNumber != null" >
+        unreceived_number = #{record.unreceivedNumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.creator != null" >
+        creator = #{record.creator,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifier != null" >
+        modifier = #{record.modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="record.extraInfo != null" >
+        extra_info = #{record.extraInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isDeleted != null" >
+        is_deleted = #{record.isDeleted,jdbcType=CHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update receipt_detail
+    set id = #{record.id,jdbcType=INTEGER},
+      receipt_no = #{record.receiptNo,jdbcType=VARCHAR},
+      goods_id = #{record.goodsId,jdbcType=VARCHAR},
+      goods_name = #{record.goodsName,jdbcType=VARCHAR},
+      goods_type = #{record.goodsType,jdbcType=VARCHAR},
+      production_site = #{record.productionSite,jdbcType=VARCHAR},
+      unit = #{record.unit,jdbcType=CHAR},
+      number = #{record.number,jdbcType=INTEGER},
+      price = #{record.price,jdbcType=VARCHAR},
+      stock = #{record.stock,jdbcType=VARCHAR},
+      delivered_number = #{record.deliveredNumber,jdbcType=INTEGER},
+      undelivered_number = #{record.undeliveredNumber,jdbcType=INTEGER},
+      received_number = #{record.receivedNumber,jdbcType=INTEGER},
+      unreceived_number = #{record.unreceivedNumber,jdbcType=INTEGER},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      creator = #{record.creator,jdbcType=VARCHAR},
+      modifier = #{record.modifier,jdbcType=VARCHAR},
+      extra_info = #{record.extraInfo,jdbcType=VARCHAR},
+      is_deleted = #{record.isDeleted,jdbcType=CHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.invoicing.core.bean.receipt.ReceiptDetail" >
+    update receipt_detail
+    <set >
+      <if test="receiptNo != null" >
+        receipt_no = #{receiptNo,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsId != null" >
+        goods_id = #{goodsId,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsName != null" >
+        goods_name = #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsType != null" >
+        goods_type = #{goodsType,jdbcType=VARCHAR},
+      </if>
+      <if test="productionSite != null" >
+        production_site = #{productionSite,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null" >
+        unit = #{unit,jdbcType=CHAR},
+      </if>
+      <if test="number != null" >
+        number = #{number,jdbcType=INTEGER},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=VARCHAR},
+      </if>
+      <if test="stock != null" >
+        stock = #{stock,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveredNumber != null" >
+        delivered_number = #{deliveredNumber,jdbcType=INTEGER},
+      </if>
+      <if test="undeliveredNumber != null" >
+        undelivered_number = #{undeliveredNumber,jdbcType=INTEGER},
+      </if>
+      <if test="receivedNumber != null" >
+        received_number = #{receivedNumber,jdbcType=INTEGER},
+      </if>
+      <if test="unreceivedNumber != null" >
+        unreceived_number = #{unreceivedNumber,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="modifier != null" >
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="extraInfo != null" >
+        extra_info = #{extraInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted = #{isDeleted,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.invoicing.core.bean.receipt.ReceiptDetail" >
+    update receipt_detail
+    set receipt_no = #{receiptNo,jdbcType=VARCHAR},
+      goods_id = #{goodsId,jdbcType=VARCHAR},
+      goods_name = #{goodsName,jdbcType=VARCHAR},
+      goods_type = #{goodsType,jdbcType=VARCHAR},
+      production_site = #{productionSite,jdbcType=VARCHAR},
+      unit = #{unit,jdbcType=CHAR},
+      number = #{number,jdbcType=INTEGER},
+      price = #{price,jdbcType=VARCHAR},
+      stock = #{stock,jdbcType=VARCHAR},
+      delivered_number = #{deliveredNumber,jdbcType=INTEGER},
+      undelivered_number = #{undeliveredNumber,jdbcType=INTEGER},
+      received_number = #{receivedNumber,jdbcType=INTEGER},
+      unreceived_number = #{unreceivedNumber,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      creator = #{creator,jdbcType=VARCHAR},
+      modifier = #{modifier,jdbcType=VARCHAR},
+      extra_info = #{extraInfo,jdbcType=VARCHAR},
+      is_deleted = #{isDeleted,jdbcType=CHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

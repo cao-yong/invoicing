@@ -1,0 +1,536 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.invoicing.core.dao.goods.GoodsDao" >
+  <resultMap id="BaseResultMap" type="com.invoicing.core.bean.goods.Goods" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="goods_no" property="goodsNo" jdbcType="VARCHAR" />
+    <result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
+    <result column="number" property="number" jdbcType="INTEGER" />
+    <result column="unit" property="unit" jdbcType="CHAR" />
+    <result column="spec" property="spec" jdbcType="VARCHAR" />
+    <result column="goods_type" property="goodsType" jdbcType="VARCHAR" />
+    <result column="production_site" property="productionSite" jdbcType="VARCHAR" />
+    <result column="mnemonic_code" property="mnemonicCode" jdbcType="VARCHAR" />
+    <result column="upper_limit" property="upperLimit" jdbcType="INTEGER" />
+    <result column="price" property="price" jdbcType="VARCHAR" />
+    <result column="purchase_price" property="purchasePrice" jdbcType="VARCHAR" />
+    <result column="main_pic_name" property="mainPicName" jdbcType="VARCHAR" />
+    <result column="secondary_pic_name" property="secondaryPicName" jdbcType="VARCHAR" />
+    <result column="goods_status" property="goodsStatus" jdbcType="INTEGER" />
+    <result column="supplier_code" property="supplierCode" jdbcType="VARCHAR" />
+    <result column="goods_type_no" property="goodsTypeNo" jdbcType="VARCHAR" />
+    <result column="repo_no" property="repoNo" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+    <result column="extra_info" property="extraInfo" jdbcType="VARCHAR" />
+    <result column="is_deleted" property="isDeleted" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    <if test="fields == null" >
+      id, goods_no, goods_name, number, unit, spec, goods_type, production_site, mnemonic_code, 
+      upper_limit, price, purchase_price, main_pic_name, secondary_pic_name, goods_status, 
+      supplier_code, goods_type_no, repo_no, remark, create_time, update_time, creator, 
+      modifier, extra_info, is_deleted
+    </if>
+    <if test="fields != null" >
+      ${fields}
+    </if>
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.invoicing.core.bean.goods.GoodsQuery" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from goods
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="startRow != null" >
+      limit #{startRow} , #{pageSize}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    id,goods_no,goods_name,number,unit,spec,goods_type,production_site,mnemonic_code,upper_limit,price,purchase_price,main_pic_name,secondary_pic_name,goods_status,supplier_code,goods_type_no,repo_no,remark,create_time,update_time,creator,modifier,extra_info,is_deleted
+    from goods
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from goods
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.invoicing.core.bean.goods.GoodsQuery" >
+    delete from goods
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.invoicing.core.bean.goods.Goods" >
+    insert into goods (id, goods_no, goods_name, 
+      number, unit, spec, goods_type, 
+      production_site, mnemonic_code, upper_limit, 
+      price, purchase_price, main_pic_name, 
+      secondary_pic_name, goods_status, supplier_code, 
+      goods_type_no, repo_no, remark, 
+      create_time, update_time, creator, 
+      modifier, extra_info, is_deleted
+      )
+    values (#{id,jdbcType=INTEGER}, #{goodsNo,jdbcType=VARCHAR}, #{goodsName,jdbcType=VARCHAR}, 
+      #{number,jdbcType=INTEGER}, #{unit,jdbcType=CHAR}, #{spec,jdbcType=VARCHAR}, #{goodsType,jdbcType=VARCHAR}, 
+      #{productionSite,jdbcType=VARCHAR}, #{mnemonicCode,jdbcType=VARCHAR}, #{upperLimit,jdbcType=INTEGER}, 
+      #{price,jdbcType=VARCHAR}, #{purchasePrice,jdbcType=VARCHAR}, #{mainPicName,jdbcType=VARCHAR}, 
+      #{secondaryPicName,jdbcType=VARCHAR}, #{goodsStatus,jdbcType=INTEGER}, #{supplierCode,jdbcType=VARCHAR}, 
+      #{goodsTypeNo,jdbcType=VARCHAR}, #{repoNo,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{creator,jdbcType=VARCHAR}, 
+      #{modifier,jdbcType=VARCHAR}, #{extraInfo,jdbcType=VARCHAR}, #{isDeleted,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.invoicing.core.bean.goods.Goods" >
+    insert into goods
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="goodsNo != null" >
+        goods_no,
+      </if>
+      <if test="goodsName != null" >
+        goods_name,
+      </if>
+      <if test="number != null" >
+        number,
+      </if>
+      <if test="unit != null" >
+        unit,
+      </if>
+      <if test="spec != null" >
+        spec,
+      </if>
+      <if test="goodsType != null" >
+        goods_type,
+      </if>
+      <if test="productionSite != null" >
+        production_site,
+      </if>
+      <if test="mnemonicCode != null" >
+        mnemonic_code,
+      </if>
+      <if test="upperLimit != null" >
+        upper_limit,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="purchasePrice != null" >
+        purchase_price,
+      </if>
+      <if test="mainPicName != null" >
+        main_pic_name,
+      </if>
+      <if test="secondaryPicName != null" >
+        secondary_pic_name,
+      </if>
+      <if test="goodsStatus != null" >
+        goods_status,
+      </if>
+      <if test="supplierCode != null" >
+        supplier_code,
+      </if>
+      <if test="goodsTypeNo != null" >
+        goods_type_no,
+      </if>
+      <if test="repoNo != null" >
+        repo_no,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="modifier != null" >
+        modifier,
+      </if>
+      <if test="extraInfo != null" >
+        extra_info,
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="goodsNo != null" >
+        #{goodsNo,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsName != null" >
+        #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="number != null" >
+        #{number,jdbcType=INTEGER},
+      </if>
+      <if test="unit != null" >
+        #{unit,jdbcType=CHAR},
+      </if>
+      <if test="spec != null" >
+        #{spec,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsType != null" >
+        #{goodsType,jdbcType=VARCHAR},
+      </if>
+      <if test="productionSite != null" >
+        #{productionSite,jdbcType=VARCHAR},
+      </if>
+      <if test="mnemonicCode != null" >
+        #{mnemonicCode,jdbcType=VARCHAR},
+      </if>
+      <if test="upperLimit != null" >
+        #{upperLimit,jdbcType=INTEGER},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=VARCHAR},
+      </if>
+      <if test="purchasePrice != null" >
+        #{purchasePrice,jdbcType=VARCHAR},
+      </if>
+      <if test="mainPicName != null" >
+        #{mainPicName,jdbcType=VARCHAR},
+      </if>
+      <if test="secondaryPicName != null" >
+        #{secondaryPicName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsStatus != null" >
+        #{goodsStatus,jdbcType=INTEGER},
+      </if>
+      <if test="supplierCode != null" >
+        #{supplierCode,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsTypeNo != null" >
+        #{goodsTypeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="repoNo != null" >
+        #{repoNo,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="modifier != null" >
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="extraInfo != null" >
+        #{extraInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="isDeleted != null" >
+        #{isDeleted,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.invoicing.core.bean.goods.GoodsQuery" resultType="java.lang.Integer" >
+    select count(*) from goods
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update goods
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.goodsNo != null" >
+        goods_no = #{record.goodsNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsName != null" >
+        goods_name = #{record.goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.number != null" >
+        number = #{record.number,jdbcType=INTEGER},
+      </if>
+      <if test="record.unit != null" >
+        unit = #{record.unit,jdbcType=CHAR},
+      </if>
+      <if test="record.spec != null" >
+        spec = #{record.spec,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsType != null" >
+        goods_type = #{record.goodsType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productionSite != null" >
+        production_site = #{record.productionSite,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mnemonicCode != null" >
+        mnemonic_code = #{record.mnemonicCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.upperLimit != null" >
+        upper_limit = #{record.upperLimit,jdbcType=INTEGER},
+      </if>
+      <if test="record.price != null" >
+        price = #{record.price,jdbcType=VARCHAR},
+      </if>
+      <if test="record.purchasePrice != null" >
+        purchase_price = #{record.purchasePrice,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mainPicName != null" >
+        main_pic_name = #{record.mainPicName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.secondaryPicName != null" >
+        secondary_pic_name = #{record.secondaryPicName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsStatus != null" >
+        goods_status = #{record.goodsStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.supplierCode != null" >
+        supplier_code = #{record.supplierCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsTypeNo != null" >
+        goods_type_no = #{record.goodsTypeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.repoNo != null" >
+        repo_no = #{record.repoNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.creator != null" >
+        creator = #{record.creator,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifier != null" >
+        modifier = #{record.modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="record.extraInfo != null" >
+        extra_info = #{record.extraInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isDeleted != null" >
+        is_deleted = #{record.isDeleted,jdbcType=CHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update goods
+    set id = #{record.id,jdbcType=INTEGER},
+      goods_no = #{record.goodsNo,jdbcType=VARCHAR},
+      goods_name = #{record.goodsName,jdbcType=VARCHAR},
+      number = #{record.number,jdbcType=INTEGER},
+      unit = #{record.unit,jdbcType=CHAR},
+      spec = #{record.spec,jdbcType=VARCHAR},
+      goods_type = #{record.goodsType,jdbcType=VARCHAR},
+      production_site = #{record.productionSite,jdbcType=VARCHAR},
+      mnemonic_code = #{record.mnemonicCode,jdbcType=VARCHAR},
+      upper_limit = #{record.upperLimit,jdbcType=INTEGER},
+      price = #{record.price,jdbcType=VARCHAR},
+      purchase_price = #{record.purchasePrice,jdbcType=VARCHAR},
+      main_pic_name = #{record.mainPicName,jdbcType=VARCHAR},
+      secondary_pic_name = #{record.secondaryPicName,jdbcType=VARCHAR},
+      goods_status = #{record.goodsStatus,jdbcType=INTEGER},
+      supplier_code = #{record.supplierCode,jdbcType=VARCHAR},
+      goods_type_no = #{record.goodsTypeNo,jdbcType=VARCHAR},
+      repo_no = #{record.repoNo,jdbcType=VARCHAR},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      creator = #{record.creator,jdbcType=VARCHAR},
+      modifier = #{record.modifier,jdbcType=VARCHAR},
+      extra_info = #{record.extraInfo,jdbcType=VARCHAR},
+      is_deleted = #{record.isDeleted,jdbcType=CHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.invoicing.core.bean.goods.Goods" >
+    update goods
+    <set >
+      <if test="goodsNo != null" >
+        goods_no = #{goodsNo,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsName != null" >
+        goods_name = #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="number != null" >
+        number = #{number,jdbcType=INTEGER},
+      </if>
+      <if test="unit != null" >
+        unit = #{unit,jdbcType=CHAR},
+      </if>
+      <if test="spec != null" >
+        spec = #{spec,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsType != null" >
+        goods_type = #{goodsType,jdbcType=VARCHAR},
+      </if>
+      <if test="productionSite != null" >
+        production_site = #{productionSite,jdbcType=VARCHAR},
+      </if>
+      <if test="mnemonicCode != null" >
+        mnemonic_code = #{mnemonicCode,jdbcType=VARCHAR},
+      </if>
+      <if test="upperLimit != null" >
+        upper_limit = #{upperLimit,jdbcType=INTEGER},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=VARCHAR},
+      </if>
+      <if test="purchasePrice != null" >
+        purchase_price = #{purchasePrice,jdbcType=VARCHAR},
+      </if>
+      <if test="mainPicName != null" >
+        main_pic_name = #{mainPicName,jdbcType=VARCHAR},
+      </if>
+      <if test="secondaryPicName != null" >
+        secondary_pic_name = #{secondaryPicName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsStatus != null" >
+        goods_status = #{goodsStatus,jdbcType=INTEGER},
+      </if>
+      <if test="supplierCode != null" >
+        supplier_code = #{supplierCode,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsTypeNo != null" >
+        goods_type_no = #{goodsTypeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="repoNo != null" >
+        repo_no = #{repoNo,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="modifier != null" >
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="extraInfo != null" >
+        extra_info = #{extraInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted = #{isDeleted,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.invoicing.core.bean.goods.Goods" >
+    update goods
+    set goods_no = #{goodsNo,jdbcType=VARCHAR},
+      goods_name = #{goodsName,jdbcType=VARCHAR},
+      number = #{number,jdbcType=INTEGER},
+      unit = #{unit,jdbcType=CHAR},
+      spec = #{spec,jdbcType=VARCHAR},
+      goods_type = #{goodsType,jdbcType=VARCHAR},
+      production_site = #{productionSite,jdbcType=VARCHAR},
+      mnemonic_code = #{mnemonicCode,jdbcType=VARCHAR},
+      upper_limit = #{upperLimit,jdbcType=INTEGER},
+      price = #{price,jdbcType=VARCHAR},
+      purchase_price = #{purchasePrice,jdbcType=VARCHAR},
+      main_pic_name = #{mainPicName,jdbcType=VARCHAR},
+      secondary_pic_name = #{secondaryPicName,jdbcType=VARCHAR},
+      goods_status = #{goodsStatus,jdbcType=INTEGER},
+      supplier_code = #{supplierCode,jdbcType=VARCHAR},
+      goods_type_no = #{goodsTypeNo,jdbcType=VARCHAR},
+      repo_no = #{repoNo,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      creator = #{creator,jdbcType=VARCHAR},
+      modifier = #{modifier,jdbcType=VARCHAR},
+      extra_info = #{extraInfo,jdbcType=VARCHAR},
+      is_deleted = #{isDeleted,jdbcType=CHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
