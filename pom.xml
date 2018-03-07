@@ -86,12 +86,6 @@
 			<artifactId>commons-lang3</artifactId>
 			<version>${org.apache.commons-version}</version>
 		</dependency>
-	
-		<dependency>
-			<groupId>commons-codec</groupId>
-			<artifactId>commons-codec</artifactId>
-			<version>${commons-codec-version}</version>
-		</dependency>
 		<!-- apache commons jar end-->
 		
 		<!-- Jackson Json处理工具包 -->
